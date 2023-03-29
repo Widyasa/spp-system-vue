@@ -13,48 +13,48 @@
     <!-- Divider -->
     <hr class="sidebar-divider my-0">
 
-    <RouterLink class="nav-item" :to="{name:'dashboard'}" active-class="active" >
-      <div class="nav-link">
+    <RouterLink class="nav-item text-decoration-none" :to="{name:'dashboard'}" active-class="active" >
+      <div class="nav-link" href="#">
         <i class="fas fa-fw fa-tachometer-alt"></i>
         <span>Dashboard</span>
       </div>
     </RouterLink>
 
-    <RouterLink class="nav-item" :to="{name:'siswa'}" active-class="active">
+    <RouterLink class="nav-item text-decoration-none" :to="{name:'siswa'}" active-class="active">
       <a class="nav-link">
         <i class="fa-solid fa-user-graduate"></i>
         <span>Data Siswa</span></a>
     </RouterLink>
 
-    <li class="nav-item {{ Request::is('api/petugas*') ? 'active' : '' }}">
-      <a class="nav-link" href="/api/petugas">
+    <RouterLink class="nav-item text-decoration-none" :to="{name:'petugas'}" active-class="active">
+      <a class="nav-link">
         <i class="fa-solid fa-user-tie"></i>
         <span>Data Petugas</span></a>
-    </li>
+    </RouterLink>
 
-    <RouterLink class="nav-item" :to="{name:'kelas'}" active-class="active">
+    <RouterLink class="nav-item text-decoration-none" :to="{name:'kelas'}" active-class="active">
       <a class="nav-link">
         <i class="fa-solid fa-school"></i>
         <span>Data Kelas</span></a>
     </RouterLink>
 
-    <li class="nav-item {{ Request::is('api/pembayaran*') ? 'active' : '' }}">
-      <a class="nav-link" href="/api/pembayaran">
+    <RouterLink class="nav-item text-decoration-none" :to="{name:'pembayaran'}" active-class="active">
+      <a class="nav-link">
         <i class="fa-solid fa-cash-register"></i>
         <span>Data Pembayaran</span></a>
-    </li>
+    </RouterLink>
 
-    <li class="nav-item {{ Request::is('api/transaksi*') ? 'active' : '' }}">
-      <a class="nav-link" href="/api/transaksi">
+    <RouterLink class="nav-item text-decoration-none" :to="{name:'spp'}" active-class="active">
+      <a class="nav-link">
         <i class="fa-solid fa-money-bill-wave"></i>
         <span>Transaksi SPP</span></a>
-    </li>
+    </RouterLink>
 
-    <li class="nav-item {{ Request::is('api/laporan') ? 'active' : '' }}">
-      <a class="nav-link" href="/api/laporan">
+    <RouterLink class="nav-item text-decoration-none" :to="{name:'laporan'}" active-class="active">
+      <a class="nav-link">
         <i class="fa-solid fa-file-pdf"></i>
         <span>Laporan</span></a>
-    </li>
+    </RouterLink>
   </ul>
   <!-- End of Sidebar -->
 

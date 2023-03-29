@@ -1,7 +1,7 @@
 <template>
   <div class="d-sm-flex align-items-center justify-content-between mb-4">
     <h1 class="h3 mb-0 text-gray-800">Halaman Pembayaran</h1>
-    <a href="/api/pembayaran/tambah" class="btn btn-primary">Tambah Pembayaran</a>
+    <RouterLink :to="{name:'createPembayaran'}" class="btn btn-primary">Tambah Pembayaran</RouterLink>
   </div>
 
   <div class="card shadow mb-4">
@@ -25,12 +25,12 @@
             <td>2021/2022</td>
             <td>250.000</td>
             <td>
-              <a href="" class="btn btn-warning btn-sm">
+              <RouterLink :to="{path:'/pembayaran/edit/'}" class="btn btn-warning btn-sm">
                 <i class="fa-regular fa-pen-to-square" style="color: #ffffff;"></i>
-              </a>
-              <a href="" class="btn btn-danger btn-sm">
+              </RouterLink>
+              <button  class="btn btn-danger btn-sm ml-3">
                 <i class="fa-regular fa-trash-can" style="color: #ffffff;"></i>
-              </a>
+              </button>
             </td>
           </tr>
           </tbody>

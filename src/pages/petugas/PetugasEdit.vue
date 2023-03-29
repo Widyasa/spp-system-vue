@@ -1,14 +1,16 @@
 <template>
   <div class="d-sm-flex align-items-center justify-content-between mb-4">
-    <h1 class="h3 mb-0 text-gray-800">Halaman Tambah Kelas</h1>
+    <h1 class="h3 mb-0 text-gray-800">Halaman Tambah Petugas</h1>
   </div>
 
   <div class="card shadow mb-4">
     <div class="card-header py-3">
-      <h6 class="m-0 font-weight-bold text-primary">Form Kelas</h6>
+      <h6 class="m-0 font-weight-bold text-primary">Form Petugas</h6>
     </div>
     <div class="card-body">
       <form action="">
+        <input type="text" class="form-control" name="pengguna_id">
+        <input type="text" class="form-control" name="role">
         <div class="row">
           <div class="col-6 mb-3">
             <label for="nama">Nama:</label>
@@ -16,13 +18,13 @@
                    placeholder="Masukkan Nama">
           </div>
           <div class="col-6 mb-3">
-            <label for="kompetensi_keahlian">Kompetensi Keahlian:</label>
-            <input type="text" class="form-control" id="kompetensi_keahlian" name="kompetensi_keahlian"
-                   placeholder="Masukkan Kompetensi Keahlian">
+            <label for="password">Password:</label>
+            <input type="text" class="form-control" id="password" name="password"
+                   placeholder="Masukkan Password">
           </div>
           <div class="col-12">
-            <button type="submit" class="btn btn-primary">Tambah Kelas</button>
-            <RouterLink :to="{name:'kelas'}" class="btn btn-secondary">Halaman Kelas</RouterLink>
+            <button type="submit" class="btn btn-primary">Tambah Petugas</button>
+            <a href="/api/petugas" class="btn btn-secondary">Halaman Petugas</a>
           </div>
         </div>
       </form>
@@ -32,7 +34,7 @@
 
 <script>
 export default {
-  name: "KelasCreate"
+  name: "PetugasEdit"
 }
 </script>
 

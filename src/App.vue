@@ -6,6 +6,12 @@ import { RouterLink, RouterView } from 'vue-router'
 <template>
   <RouterView />
 </template>
+<style scoped>
+body{
+  min-height: 100vh;
+  height: 100%;
+}
+</style>
 
 
 

@@ -22,7 +22,7 @@
           </div>
           <div class="col-12">
             <button type="submit" class="btn btn-primary">Tambah Pembayaran</button>
-            <a href="/api/pembayaran" class="btn btn-secondary">Halaman Pembayaran</a>
+            <RouterLink :to="{name:'pembayaran'}" class="btn btn-secondary">Halaman Pembayaran</RouterLink>
           </div>
         </div>
       </form>
