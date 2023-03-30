@@ -12,17 +12,15 @@
         <div class="row">
           <div class="col-6 mb-3">
             <label for="nama">Nama:</label>
-            <input type="text" class="form-control" id="nama" name="nama"
-                   placeholder="Masukkan Nama">
+            <input type="text" maxlength="10" v-model="model.kelas.nama" class="form-control" id="nama" name="nama">
           </div>
           <div class="col-6 mb-3">
             <label for="kompetensi_keahlian">Kompetensi Keahlian:</label>
-            <input type="text" class="form-control" id="kompetensi_keahlian" name="kompetensi_keahlian"
-                   placeholder="Masukkan Kompetensi Keahlian">
+            <input type="text" maxlength="30" v-model="model.kelas.kompetensi_keahlian" class="form-control" id="kompetensi_keahlian" name="kompetensi_keahlian">
           </div>
           <div class="col-12">
-            <button type="submit" class="btn btn-primary">Edit Kelas</button>
-            <a href="/api/kelas" class="btn btn-secondary">Halaman Kelas</a>
+            <button type="button" @click="editKelas"  class="btn btn-primary">Edit Kelas</button>
+            <RouterLink :to="{name:'kelas'}" class="btn btn-secondary">Halaman Kelas</RouterLink>
           </div>
         </div>
       </form>
@@ -31,8 +29,41 @@
 </template>
 
 <script>
+import axios from "axios";
+
 export default {
-  name: "KelasEdit"
+  name: "KelasEdit",
+  data () {
+    return{
+      errorlist:'',
+      kelasId:'',
+      model: {
+        kelas:{
+          nama:'',
+          kompetensi_keahlian:''
+        }
+      }
+    }
+  },
+  mounted() {
+    this.id = this.$route.params.id
+    this.getKelasData(this.$route.params.id)
+  },
+  methods: {
+    getKelasData(){
+      axios.get(`http://127.0.0.1:8000/api/kelas/update/${this.id}`)
+          .then(({data}) => {
+            this.model.kelas = data.data
+          });
+    },
+    editKelas() {
+      axios.put(`http://127.0.0.1:8000/api/team/members/edit/${this.id}`, this.model.kelas)
+          .then(({data})=> {
+            this.model.kelas = data.data
+            this.$router.push({name:"kelas"})
+          })
+      }
+    }
 }
 </script>
 

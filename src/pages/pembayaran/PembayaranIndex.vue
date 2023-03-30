@@ -16,22 +16,27 @@
             <th>No.</th>
             <th>Tahun Ajaran</th>
             <th>Nominal</th>
-            <th></th>
+            <th>Aksi</th>
           </tr>
           </thead>
-          <tbody>
-          <tr>
-            <td>1.</td>
-            <td>2021/2022</td>
-            <td>250.000</td>
+          <tbody v-if="this.pembayaran.length > 0">
+          <tr v-for="(pembayaran, index) in this.pembayaran" :key="index">
+            <td>{{index+1}}</td>
+            <td>{{pembayaran.tahun_ajaran}}</td>
+            <td>{{pembayaran.nominal}}</td>
             <td>
-              <RouterLink :to="{path:'/pembayaran/edit/'}" class="btn btn-warning btn-sm">
+              <RouterLink :to="{path:'/pembayaran/edit/'+pembayaran.id}" class="btn btn-warning btn-sm">
                 <i class="fa-regular fa-pen-to-square" style="color: #ffffff;"></i>
               </RouterLink>
-              <button  class="btn btn-danger btn-sm ml-3">
+              <button @click="deletePembayaran(pembayaran.id)" class="btn btn-danger btn-sm ml-3">
                 <i class="fa-regular fa-trash-can" style="color: #ffffff;"></i>
               </button>
             </td>
+          </tr>
+          </tbody>
+          <tbody v-else>
+          <tr aria-colspan="4">
+            Loading...
           </tr>
           </tbody>
         </table>
@@ -41,8 +46,37 @@
 </template>
 
 <script>
+import axios from "axios";
+
 export default {
-  name: "PembayaranIndex"
+  name: "PembayaranIndex",
+  data (){
+    return{
+      pembayaran:[]
+    }
+  },
+  mounted() {
+    this.getPembayaran()
+  },
+  methods: {
+    getPembayaran() {
+      axios.get('http://127.0.0.1:8000/api/pembayaran')
+          .then(({data}) => {
+            this.pembayaran = data.data;
+            this.pembayaran.sort((a,b)=>a.tahun_ajaran.localeCompare(b.tahun_ajaran))
+          });
+    },
+    deletePembayaran(pembayaranId) {
+      if (confirm('Yakin Mau Hapus?')) {
+        // console.log(pembayaranId)
+        axios.post(`http://127.0.0.1:8000/api/pembayaran/destroy/${pembayaranId}`)
+            .then(({data})=>{
+              // console.log(data.data)
+              this.getPembayaran();
+            })
+      }
+    }
+  }
 }
 </script>
 

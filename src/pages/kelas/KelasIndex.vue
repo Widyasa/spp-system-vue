@@ -20,20 +20,25 @@
             <th></th>
           </tr>
           </thead>
-          <tbody>
-          <tr>
-            <td>1.</td>
-            <td>XII RPL 1</td>
-            <td>Rekayasa Perangkat Lunak</td>
-            <td>3 siswa</td>
+          <tbody v-if="this.kelas.length>0">
+          <tr v-for="(kelas,index) in this.kelas" :key="index">
+            <td>{{index+1}}</td>
+            <td>{{kelas.nama}}</td>
+            <td>{{kelas.kompetensi_keahlian}}</td>
+            <td>{{kelas.siswas_count}}</td>
             <td>
-              <RouterLink :to="{path:'/kelas/edit/'}" class="btn btn-warning btn-sm">
+              <RouterLink :to="{path:'/kelas/edit/'+kelas.id}" class="btn btn-warning btn-sm">
                 <i class="fa-regular fa-pen-to-square" style="color: #ffffff;"></i>
               </RouterLink>
-              <button href="" class="btn btn-danger btn-sm ml-3">
+              <button type="button" class="btn btn-danger btn-sm ml-3">
                 <i class="fa-regular fa-trash-can" style="color: #ffffff;"></i>
               </button>
             </td>
+          </tr>
+          </tbody>
+          <tbody v-else>
+          <tr aria-colspan="5">
+            Loading...
           </tr>
           </tbody>
         </table>
@@ -43,8 +48,26 @@
 </template>
 
 <script>
+import axios from "axios";
+
 export default {
-name: "KelasIndex"
+name: "KelasIndex",
+  data () {
+  return{
+    kelas:[],
+  }
+  },
+  mounted() {
+    this.getKelas()
+  },
+  methods: {
+    getKelas() {
+      axios.get('http://127.0.0.1:8000/api/kelas').then(({data}) => {
+        this.kelas = data.data;
+        this.kelas.sort((a,b)=>a.kompetensi_keahlian.localeCompare(b.kompetensi_keahlian))
+      });
+    },
+  }
 }
 </script>
 

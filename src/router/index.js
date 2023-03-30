@@ -16,6 +16,7 @@ import laporanIndex from "@/pages/laporan/LaporanIndex.vue";
 import loginPage from "@/pages/LoginPage.vue";
 import laporanGenerate from "@/pages/laporan/LaporanGenerate.vue";
 import petugasIndex from "@/pages/petugas/PetugasIndex.vue";
+import pembayaranEdit from "@/pages/pembayaran/PembayaranEdit.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -38,7 +39,7 @@ const router = createRouter({
         {path: '/siswa/edit/:id', name:'EditSiswa', component: siswaEdit},
         {path: '/pembayaran', name:'pembayaran', component: pembayaranIndex},
         {path: '/pembayaran/create', name:'createPembayaran', component: pembayaranCreate},
-        {path: '/pembayaran/edit/:id', name:'EditPembayaran', component: kelasEdit},
+        {path: '/pembayaran/edit/:id', name:'EditPembayaran', component: pembayaranEdit},
         {path: '/spp', name:'spp', component: sppIndex},
         {path: '/laporan', name:'laporan', component: laporanIndex},
       ]
