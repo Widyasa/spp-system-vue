@@ -20,7 +20,7 @@
           </div>
           <div class="col-12">
             <button type="button" @click="editKelas"  class="btn btn-primary">Edit Kelas</button>
-            <RouterLink :to="{name:'kelas'}" class="btn btn-secondary">Halaman Kelas</RouterLink>
+            <RouterLink :to="{name:'kelas'}" class="btn btn-secondary ml-3">Halaman Kelas</RouterLink>
           </div>
         </div>
       </form>
@@ -46,18 +46,18 @@ export default {
     }
   },
   mounted() {
-    this.id = this.$route.params.id
+    this.kelasId = this.$route.params.id
     this.getKelasData(this.$route.params.id)
   },
   methods: {
     getKelasData(){
-      axios.get(`http://127.0.0.1:8000/api/kelas/update/${this.id}`)
+      axios.get(`http://127.0.0.1:8000/api/kelas/update/${this.kelasId}`)
           .then(({data}) => {
-            this.model.kelas = data.data
+            this.model.kelas = data.data[0]
           });
     },
     editKelas() {
-      axios.put(`http://127.0.0.1:8000/api/team/members/edit/${this.id}`, this.model.kelas)
+      axios.post(`http://127.0.0.1:8000/api/kelas/update/${this.kelasId}`, this.model.kelas)
           .then(({data})=> {
             this.model.kelas = data.data
             this.$router.push({name:"kelas"})

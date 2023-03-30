@@ -30,7 +30,7 @@
               <RouterLink :to="{path:'/kelas/edit/'+kelas.id}" class="btn btn-warning btn-sm">
                 <i class="fa-regular fa-pen-to-square" style="color: #ffffff;"></i>
               </RouterLink>
-              <button type="button" class="btn btn-danger btn-sm ml-3">
+              <button type="button" @click="deleteKelas(kelas.id)" class="btn btn-danger btn-sm ml-3">
                 <i class="fa-regular fa-trash-can" style="color: #ffffff;"></i>
               </button>
             </td>
@@ -67,6 +67,14 @@ name: "KelasIndex",
         this.kelas.sort((a,b)=>a.kompetensi_keahlian.localeCompare(b.kompetensi_keahlian))
       });
     },
+    deleteKelas(kelasId) {
+      if (confirm('Yakin Mau Hapus?')) {
+        axios.post(`http://127.0.0.1:8000/api/kelas/destroy/${kelasId}`)
+            .then(({data}) => {
+              this.getKelas()
+            })
+      }
+    }
   }
 }
 </script>
