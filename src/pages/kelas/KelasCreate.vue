@@ -54,7 +54,7 @@ export default {
   methods: {
     saveKelas() {
       let myThis = this;
-      axios.post('http://127.0.0.1:8000/api/kelas/store', this.model.kelas)
+      axios.post('http://127.0.0.1:8000/api/kelas/tambah', this.model.kelas)
           .then(({data}) => {
             console.log(data.data)
             this.model.kelas = {

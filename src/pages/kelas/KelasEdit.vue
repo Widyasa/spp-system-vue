@@ -51,13 +51,13 @@ export default {
   },
   methods: {
     getKelasData(){
-      axios.get(`http://127.0.0.1:8000/api/kelas/update/${this.kelasId}`)
+      axios.get(`http://127.0.0.1:8000/api/kelas/edit/${this.kelasId}`)
           .then(({data}) => {
             this.model.kelas = data.data[0]
           });
     },
     editKelas() {
-      axios.post(`http://127.0.0.1:8000/api/kelas/update/${this.kelasId}`, this.model.kelas)
+      axios.post(`http://127.0.0.1:8000/api/kelas/edit/${this.kelasId}`, this.model.kelas)
           .then(({data})=> {
             this.model.kelas = data.data
             this.$router.push({name:"kelas"})
