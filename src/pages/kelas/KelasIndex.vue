@@ -69,7 +69,7 @@ name: "KelasIndex",
     },
     deleteKelas(kelasId) {
       if (confirm('Yakin Mau Hapus?')) {
-        axios.post(`http://127.0.0.1:8000/api/kelas/destroy/${kelasId}`)
+        axios.post(`http://127.0.0.1:8000/api/kelas/hapus/${kelasId}`)
             .then(({data}) => {
               this.getKelas()
             })
