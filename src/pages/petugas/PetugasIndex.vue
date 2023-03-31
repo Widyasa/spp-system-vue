@@ -16,23 +16,26 @@
             <th>No.</th>
             <th>Nama</th>
             <th>Role</th>
-            <th></th>
+            <th>Aksi</th>
           </tr>
           </thead>
-          <tbody>
-          <tr>
-            <td>1.</td>
-            <td>Petugas123</td>
-            <td>petugas</td>
+          <tbody v-if="this.petugas.length > 0">
+          <tr v-for="(petugas, index) in this.petugas" :key="index">
+            <td>{{index+1}}</td>
+            <td>{{petugas.nama}}</td>
+            <td>{{petugas.role==2 ? 'petugas' : petugas.role==1 ? 'admin' : ''}}</td>
             <td>
-              <RouterLink :to="{path:'/petugas/edit/'}" class="btn btn-warning btn-sm">
+              <RouterLink :to="{path:'/petugas/edit/'+petugas.pengguna_id}" class="btn btn-warning btn-sm">
                 <i class="fa-regular fa-pen-to-square" style="color: #ffffff;"></i>
               </RouterLink>
-              <button href="" class="btn btn-danger btn-sm ml-3">
+              <button type="button" @click="deletePetugas(petugas.pengguna_id)" class="btn btn-danger btn-sm ml-3">
                 <i class="fa-regular fa-trash-can" style="color: #ffffff;"></i>
               </button>
             </td>
           </tr>
+          </tbody>
+          <tbody v-else>
+            <tr aria-colspan="4">Loading...</tr>
           </tbody>
         </table>
       </div>
@@ -41,8 +44,37 @@
 </template>
 
 <script>
+import axios from "axios";
+
 export default {
-  name: "PetugasIndex"
+  name: "PetugasIndex",
+  data (){
+    return{
+      petugas:[]
+    }
+  },
+  mounted() {
+    this.getPetugas()
+  },
+  methods: {
+    getPetugas() {
+      axios.get('http://127.0.0.1:8000/api/petugas')
+          .then(({data}) => {
+            this.petugas = data.data;
+            this.petugas.sort((a,b)=>a.nama.localeCompare(b.nama))
+          });
+    },
+    deletePetugas(petugasId) {
+      if (confirm('Yakin Mau Hapus?')) {
+        // console.log(pembayaranId)
+        axios.post(`http://127.0.0.1:8000/api/petugas/hapus/${petugasId}`)
+            .then(({data})=>{
+              console.log(data.data)
+              this.getPetugas();
+            })
+      }
+    }
+  }
 }
 </script>
 

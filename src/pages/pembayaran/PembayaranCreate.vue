@@ -54,7 +54,7 @@ export default {
   methods: {
     savePembayaran() {
       let myThis = this;
-      axios.post('http://127.0.0.1:8000/api/pembayaran/store', this.model.pembayaran)
+      axios.post('http://127.0.0.1:8000/api/pembayaran/tambah', this.model.pembayaran)
           .then(({data}) => {
             console.log(data.data)
             this.model.pembayaran = {

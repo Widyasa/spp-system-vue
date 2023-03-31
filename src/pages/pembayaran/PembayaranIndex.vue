@@ -69,7 +69,7 @@ export default {
     deletePembayaran(pembayaranId) {
       if (confirm('Yakin Mau Hapus?')) {
         // console.log(pembayaranId)
-        axios.post(`http://127.0.0.1:8000/api/pembayaran/destroy/${pembayaranId}`)
+        axios.post(`http://127.0.0.1:8000/api/pembayaran/hapus/${pembayaranId}`)
             .then(({data})=>{
               // console.log(data.data)
               this.getPembayaran();

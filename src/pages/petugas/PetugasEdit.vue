@@ -9,22 +9,22 @@
     </div>
     <div class="card-body">
       <form action="">
-        <input type="text" class="form-control" name="pengguna_id">
-        <input type="text" class="form-control" name="role">
+<!--        <input type="text" v-model="model.petugas.id" class="form-control" name="pengguna_id">-->
+<!--        <input type="text" class="form-control" name="role">-->
         <div class="row">
           <div class="col-6 mb-3">
             <label for="nama">Nama:</label>
-            <input type="text" class="form-control" id="nama" name="nama"
-                   placeholder="Masukkan Nama">
+            <input type="text" class="form-control" id="nama" name="username"
+                   v-model="model.petugas.username">
           </div>
           <div class="col-6 mb-3">
             <label for="password">Password:</label>
             <input type="text" class="form-control" id="password" name="password"
-                   placeholder="Masukkan Password">
+                   v-model="model.petugas.password">
           </div>
           <div class="col-12">
-            <button type="submit" class="btn btn-primary">Tambah Petugas</button>
-            <a href="/api/petugas" class="btn btn-secondary">Halaman Petugas</a>
+            <button type="button" @click="editPetugas" class="btn btn-primary">Edit Petugas</button>
+            <RouterLink :to="{name:'petugas'}" class="btn btn-secondary ml-3">Halaman Petugas</RouterLink>
           </div>
         </div>
       </form>
@@ -33,8 +33,44 @@
 </template>
 
 <script>
+import axios from "axios";
+
 export default {
-  name: "PetugasEdit"
+  name: "PetugasEdit",
+  data() {
+    return{
+      petugasId:'',
+      model: {
+        petugas:{
+          // id:'',
+          username:'',
+          password:''
+        }
+      }
+    }
+  },
+  mounted() {
+    this.petugasId = this.$route.params.id
+    this.getPetugasData(this.$route.params.id)
+    console.log(this.petugasId)
+  },
+  methods: {
+    getPetugasData() {
+      axios.get(`http://127.0.0.1:8000/api/petugas/edit/${this.petugasId}`)
+          .then(({data})=> {
+            this.model.petugas = data.data[0]
+          })
+    },
+    editPetugas () {
+      axios.post(`http://127.0.0.1:8000/api/petugas/edit/${this.petugasId}`, this.model.petugas)
+          .then(({data})=>{
+            console.log(data.data)
+            this.model.petugas = data.data
+            this.$router.push({name:'petugas'})
+          })
+
+    }
+  }
 }
 </script>
 

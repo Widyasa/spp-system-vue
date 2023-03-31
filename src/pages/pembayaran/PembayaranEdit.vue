@@ -51,13 +51,13 @@ export default {
   },
   methods: {
     getPembayaranData(){
-      axios.get(`http://127.0.0.1:8000/api/pembayaran/update/${this.pembayaranId}`)
+      axios.get(`http://127.0.0.1:8000/api/pembayaran/edit/${this.pembayaranId}`)
           .then(({data})=>{
             this.model.pembayaran = data.data[0];
           });
     },
     editPembayaran() {
-      axios.post(`http://127.0.0.1:8000/api/pembayaran/update/${this.pembayaranId}`, this.model.pembayaran)
+      axios.post(`http://127.0.0.1:8000/api/pembayaran/edit/${this.pembayaranId}`, this.model.pembayaran)
           .then(({data})=>{
             console.log(data.data)
             this.model.pembayaran = data.data
