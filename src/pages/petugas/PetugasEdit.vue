@@ -22,6 +22,7 @@
             <input type="text" class="form-control" id="password" name="password"
                    v-model="model.petugas.password">
           </div>
+          <p id="array"></p>
           <div class="col-12">
             <button type="button" @click="editPetugas" class="btn btn-primary">Edit Petugas</button>
             <RouterLink :to="{name:'petugas'}" class="btn btn-secondary ml-3">Halaman Petugas</RouterLink>
@@ -59,6 +60,7 @@ export default {
       axios.get(`http://127.0.0.1:8000/api/petugas/edit/${this.petugasId}`)
           .then(({data})=> {
             this.model.petugas = data.data[0]
+            // document.getElementById('array').innerHTML= this.model.petugas
           })
     },
     editPetugas () {

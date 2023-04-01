@@ -20,27 +20,30 @@
             <th>Alamat</th>
             <th>Telepon</th>
             <th>Kelas</th>
-            <th></th>
+            <th>Aksi</th>
           </tr>
           </thead>
-          <tbody>
-          <tr>
-            <td>1.</td>
-            <td>12345678910</td>
-            <td>12345</td>
-            <td>Aditya Prayatna</td>
-            <td>Jl. Ahmad Yani</td>
-            <td>08123456789</td>
-            <td>XII RPL 1</td>
+          <tbody v-if="this.siswa.length > 0">
+          <tr v-for="(siswa, index) in this.siswa" :key="index">
+            <td>{{index+1}}</td>
+            <td>{{siswa.nisn}}</td>
+            <td>{{ siswa.nis }}</td>
+            <td>{{siswa.nama}}</td>
+            <td>{{siswa.alamat}}</td>
+            <td>{{siswa.telepon}}</td>
+            <td>{{siswa.nama_kelas}}</td>
             <td>
-              <RouterLink :to="{path:'/siswa/edit/'}" class="btn btn-warning btn-sm">
+              <RouterLink :to="{path:'/siswa/edit/'+siswa.pengguna_id}" class="btn btn-warning btn-sm">
                 <i class="fa-regular fa-pen-to-square" style="color: #ffffff;"></i>
               </RouterLink>
-              <button href="" class="btn btn-danger ml-3 btn-sm">
+              <button type="button" @click="deleteSiswa(siswa.pengguna_id)" class="btn btn-danger ml-3 btn-sm">
                 <i class="fa-regular fa-trash-can" style="color: #ffffff;"></i>
               </button>
             </td>
           </tr>
+          </tbody>
+          <tbody v-else>
+          <tr aria-colspan="8">Loading...</tr>
           </tbody>
         </table>
       </div>
@@ -49,8 +52,35 @@
 </template>
 
 <script>
+import axios from "axios";
+
 export default {
-  name: "SiswaIndex"
+  name: "SiswaIndex",
+  data() {
+    return{
+      siswa:[]
+    }
+  },
+  mounted() {
+    this.getSiswa()
+  },
+  methods : {
+    getSiswa() {
+      axios.get('http://127.0.0.1:8000/api/siswa')
+          .then(({data})=>{
+            this.siswa=data.data
+            this.siswa.sort((a,b)=>a.nama.localeCompare(b.nama))
+          })
+    },
+    deleteSiswa(siswaId) {
+      if (confirm('Yakin Mau Hapus?')){
+        axios.post(`http://127.0.0.1:8000/api/siswa/hapus/${siswaId}`)
+            .then(({data}) =>{
+              this.getSiswa()
+            })
+      }
+    }
+  }
 }
 </script>
 
