@@ -45,7 +45,7 @@
               <div class="col-6 mb-3">
                 <label for="kelas">Kelas:</label>
                 <select class="form-control" v-model="model.siswa.kelas_id" id="kelas" name="kelas_id" >
-                 <!-- <option :value="model.siswa.kelas_id." selected>{{siswa.nama_kelas}}</option> -->
+<!--                  <option value="" selected>{{siswa.nama_kelas}}</option>-->
                   <option v-for="(kelasId) in this.kelasId" :value="kelasId.id">
                     {{kelasId.nama}}
                   </option>
@@ -99,11 +99,11 @@ export default {
       // let myThis = this;
       axios.get(`http://127.0.0.1:8000/api/siswa/edit/${this.penggunaId}`)
           .then(({data})=>{
-            this.model.siswa = data.data[0][0]
+            this.model.siswa = data.data.dataSiswa[0]
             console.log(data.data[1])
-            this.selectedOption = 
+
             // document.getElementById('array').innerHTML=this.model.siswa
-            this.kelasId = data.data[1]
+            this.kelasId = data.data.dataKelas
             this.model.siswa.kelas_id = this.kelasId
           })
 
@@ -113,7 +113,7 @@ export default {
       axios.post(`http://127.0.0.1:8000/api/siswa/edit/${this.penggunaId}`, this.model.siswa)
           .then(({data})=>{
             console.log(data.data)
-            this.model.siswa = data.data[0][0]
+            this.model.siswa = data.data[1][0]
             this.$router.push({name:'siswa'})
           })
           .catch( function (error) {

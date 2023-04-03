@@ -68,7 +68,7 @@ export default {
     getSiswa() {
       axios.get('http://127.0.0.1:8000/api/siswa')
           .then(({data})=>{
-            this.siswa=data.data
+            this.siswa=data.data.siswas
             this.siswa.sort((a,b)=>a.nama.localeCompare(b.nama))
           })
     },
