@@ -62,7 +62,7 @@ export default {
     getPembayaran() {
       axios.get('http://127.0.0.1:8000/api/pembayaran')
           .then(({data}) => {
-            this.pembayaran = data.data;
+            this.pembayaran = data.data.pembayarans;
             this.pembayaran.sort((a,b)=>a.tahun_ajaran.localeCompare(b.tahun_ajaran))
           });
     },

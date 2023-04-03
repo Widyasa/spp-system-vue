@@ -53,7 +53,7 @@ export default {
     getPembayaranData(){
       axios.get(`http://127.0.0.1:8000/api/pembayaran/edit/${this.pembayaranId}`)
           .then(({data})=>{
-            this.model.pembayaran = data.data[0];
+            this.model.pembayaran = data.data.pembayaran[0];
           });
     },
     editPembayaran() {
