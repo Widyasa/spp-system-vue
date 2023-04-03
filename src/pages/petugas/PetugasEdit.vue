@@ -19,8 +19,8 @@
           </div>
           <div class="col-6 mb-3">
             <label for="password">Password:</label>
-            <input type="text" class="form-control" id="password" name="password"
-                   v-model="model.petugas.password">
+            <input type="password" class="form-control" id="password" name="password"
+                   >
           </div>
           <p id="array"></p>
           <div class="col-12">

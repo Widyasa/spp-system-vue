@@ -25,7 +25,7 @@
                 <div class="col mr-2">
                   <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
                     Total Siswa</div>
-                  <div class="h5 mb-0 font-weight-bold text-gray-800">{{countSiswa.countSiswa}}</div>
+                  <div class="h5 mb-0 font-weight-bold text-gray-800">{{this.model.dashboard.countSiswa}}</div>
                 </div>
               </div>
             </div>
@@ -38,7 +38,7 @@
                 <div class="col mr-2">
                   <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
                     Total Kelas</div>
-                  <div class="h5 mb-0 font-weight-bold text-gray-800">{{countKelas.countKelas}}</div>
+                  <div class="h5 mb-0 font-weight-bold text-gray-800">{{this.model.dashboard.countKelas}}</div>
                 </div>
               </div>
             </div>
@@ -53,7 +53,7 @@
                   </div>
                   <div class="row no-gutters align-items-center">
                     <div class="col-auto">
-                      <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">{{countPetugas.countPetugas}}</div>
+                      <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">{{this.model.dashboard.countPetugas}}</div>
                     </div>
                   </div>
                 </div>
@@ -68,7 +68,7 @@
                 <div class="col mr-2">
                   <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
                     Total Transaksi</div>
-                  <div class="h5 mb-0 font-weight-bold text-gray-800">{{countTransaksi.countTransaksi}}</div>
+                  <div class="h5 mb-0 font-weight-bold text-gray-800">{{this.model.dashboard.countTransaksi}}</div>
                 </div>
               </div>
             </div>
@@ -104,8 +104,11 @@ export default {
       countKelas:'',
       countPetugas:'',
       countTransaksi:'',
+      loggedIn:localStorage.getItem('loggedIn'),
+      token:localStorage.getItem('token'),
       model: {
         dashboard: {
+          user:[],
           countSiswa:'',
           countKelas:'',
           countPetugas:'',
@@ -114,22 +117,24 @@ export default {
       }
     }
   },
-  mounted() {
+  created() {
+    axios.defaults.headers.common['Authorization'] = `Bearer ${this.token}`
     this.getDataDashboard()
+  },
+  mounted() {
+    if(!this.token) {
+      return this.$router.push({ name: 'login' })
+    }
   },
   methods: {
     getDataDashboard() {
       axios.get('http://127.0.0.1:8000/api/dashboard')
           .then(({data})=>{
-            this.countSiswa = data.data[0][0]
-            this.countKelas = data.data[1][0]
-            this.countPetugas = data.data[2][0]
-            this.countTransaksi = data.data[3][0]
-            console.log(data.data[0][0])
-            // this.model.dashboard.countSiswa=this.countSiswa
-            // this.model.dashboard.countKelas=this.countKelas
-            // this.model.dashboard.countPetugas=this.countPetugas
-            // this.model.dashboard.countTransaksi=this.countTransaksi
+            this.model.dashboard = data.data
+            this.model.dashboard.countTransaksi = data.data.countTransaksi[0].countTransaksi
+            this.model.dashboard.countSiswa = data.data.countSiswa[0].countSiswa
+            this.model.dashboard.countKelas = data.data.countKelas[0].countKelas
+            this.model.dashboard.countPetugas = data.data.countPetugas[0].countPetugas
           })
     }
   }

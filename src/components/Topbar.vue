@@ -17,7 +17,7 @@
       <li class="nav-item dropdown no-arrow">
         <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown"
            aria-haspopup="true" aria-expanded="false">
-          <span class="mr-2 d-none d-lg-inline text-gray-600 small">Admin</span>
+          <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{this.model.dashboard.user.role}}</span>
           <img class="img-profile rounded-circle" src="../assets/img/undraw_profile.svg">
         </a>
         <!-- Dropdown - User Information -->
@@ -34,8 +34,46 @@
 </template>
 
 <script>
+import axios from "axios";
+
 export default {
-  name: "Topbar"
+  name: "Topbar",
+  data() {
+    return {
+      token:localStorage.getItem('token'),
+      model: {
+        dashboard: {
+          user:{
+            nama:'',
+            role:''
+          }
+        }
+      }
+    }
+  },
+  created() {
+    axios.defaults.headers.common['Authorization'] = `Bearer ${this.token}`
+    this.getDataDashboard()
+  },
+  mounted() {
+    if(!this.token) {
+      return this.$router.push({ name: 'login' })
+    }
+  },
+  methods: {
+    getDataDashboard() {
+      axios.get('http://127.0.0.1:8000/api/dashboard')
+          .then(({data})=>{
+            let role = data.data.user.role
+            console.log(role)
+            this.model.dashboard.user.role = role
+            // this.model.dashboard.countTransaksi = data.data.countTransaksi[0].countTransaksi
+            // this.model.dashboard.countSiswa = data.data.countSiswa[0].countSiswa
+            // this.model.dashboard.countKelas = data.data.countKelas[0].countKelas
+            // this.model.dashboard.countPetugas = data.data.countPetugas[0].countPetugas
+          })
+    }
+  }
 }
 </script>
 

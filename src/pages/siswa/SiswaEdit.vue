@@ -45,8 +45,10 @@
               <div class="col-6 mb-3">
                 <label for="kelas">Kelas:</label>
                 <select class="form-control" v-model="model.siswa.kelas_id" id="kelas" name="kelas_id" >
-                  <option :value="model.siswa.kelas_id" disabled selected>Pilih Kelas</option>
-                  <option v-for="(kelasId) in this.kelasId" :value="kelasId.id">{{kelasId.nama}}</option>
+                 <!-- <option :value="model.siswa.kelas_id." selected>{{siswa.nama_kelas}}</option> -->
+                  <option v-for="(kelasId) in this.kelasId" :value="kelasId.id">
+                    {{kelasId.nama}}
+                  </option>
                 </select>
               </div>
               <div class="col-12">
@@ -70,6 +72,7 @@ export default {
     return {
       kelasId:'',
       penggunaId:'',
+      selectedValue:'',
       model: {
         siswa: {
           nisn:'',
@@ -98,6 +101,7 @@ export default {
           .then(({data})=>{
             this.model.siswa = data.data[0][0]
             console.log(data.data[1])
+            this.selectedOption = 
             // document.getElementById('array').innerHTML=this.model.siswa
             this.kelasId = data.data[1]
             this.model.siswa.kelas_id = this.kelasId

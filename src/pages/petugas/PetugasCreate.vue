@@ -19,7 +19,7 @@
           </div>
           <div class="col-6 mb-3">
             <label for="password">Password:</label>
-            <input type="text" v-model="model.petugas.password" class="form-control" id="password" name="password"
+            <input type="password" v-model="model.petugas.password" class="form-control" id="password" name="password"
                    placeholder="Masukkan Password">
           </div>
           <div class="col-12">

@@ -45,8 +45,8 @@ const router = createRouter({
       ]
     },
     {
-      path: '/auth',
-      name: 'auth',
+      path: '/login',
+      name: 'login',
       component: loginPage,
     },
     {
