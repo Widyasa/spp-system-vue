@@ -60,7 +60,7 @@ export default {
     getPetugas() {
       axios.get('http://127.0.0.1:8000/api/petugas')
           .then(({data}) => {
-            this.petugas = data.data;
+            this.petugas = data.data.petugases;
             this.petugas.sort((a,b)=>a.nama.localeCompare(b.nama))
           });
     },

@@ -59,7 +59,7 @@ export default {
     getPetugasData() {
       axios.get(`http://127.0.0.1:8000/api/petugas/edit/${this.petugasId}`)
           .then(({data})=> {
-            this.model.petugas = data.data[0]
+            this.model.petugas = data.data.petugas[0]
             // document.getElementById('array').innerHTML= this.model.petugas
           })
     },
