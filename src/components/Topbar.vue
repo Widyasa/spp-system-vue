@@ -17,7 +17,7 @@
       <li class="nav-item dropdown no-arrow">
         <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown"
            aria-haspopup="true" aria-expanded="false">
-          <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{this.model.dashboard.user.role}}</span>
+          <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{this.model.dashboard.user.nama}}</span>
           <img class="img-profile rounded-circle" src="../assets/img/undraw_profile.svg">
         </a>
         <!-- Dropdown - User Information -->
@@ -64,9 +64,9 @@ export default {
     getDataDashboard() {
       axios.get('http://127.0.0.1:8000/api/dashboard')
           .then(({data})=>{
-            let role = data.data.user.role
-            console.log(role)
-            this.model.dashboard.user.role = role
+            let nama = data.data.user.nama
+            console.log(nama)
+            this.model.dashboard.user.nama = nama
             // this.model.dashboard.countTransaksi = data.data.countTransaksi[0].countTransaksi
             // this.model.dashboard.countSiswa = data.data.countSiswa[0].countSiswa
             // this.model.dashboard.countKelas = data.data.countKelas[0].countKelas

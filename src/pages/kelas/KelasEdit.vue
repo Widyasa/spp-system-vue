@@ -35,6 +35,7 @@ export default {
   name: "KelasEdit",
   data () {
     return{
+      token:localStorage.getItem('token'),
       errorlist:'',
       kelasId:'',
       model: {
@@ -45,7 +46,13 @@ export default {
       }
     }
   },
+  created() {
+    axios.defaults.headers.common['Authorization'] = `Bearer ${this.token}`
+  },
   mounted() {
+    if(!this.token) {
+      return this.$router.push({ name: 'login' })
+    }
     this.kelasId = this.$route.params.id
     this.getKelasData(this.$route.params.id)
   },
@@ -53,7 +60,7 @@ export default {
     getKelasData(){
       axios.get(`http://127.0.0.1:8000/api/kelas/edit/${this.kelasId}`)
           .then(({data}) => {
-            this.model.kelas = data.data[0]
+            this.model.kelas = data.data.kelas[0]
           });
     },
     editKelas() {

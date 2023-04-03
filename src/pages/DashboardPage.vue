@@ -9,7 +9,7 @@
         <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
         </div>
         <div class="card-body">
-          <h1>Selamat Datang</h1>
+          <h1>Selamat Datang Anda Terdaftar Sebagai {{this.model.dashboard.user.role==1 ? 'Admin' : this.model.dashboard.user.role==2 ? 'Petugas' : this.model.dashboard.user.role==3 ? 'Siswa' : ''}}</h1>
         </div>
       </div>
     </div>
@@ -108,7 +108,10 @@ export default {
       token:localStorage.getItem('token'),
       model: {
         dashboard: {
-          user:[],
+          user:{
+            nama:'',
+            role:''
+          },
           countSiswa:'',
           countKelas:'',
           countPetugas:'',
@@ -130,7 +133,7 @@ export default {
     getDataDashboard() {
       axios.get('http://127.0.0.1:8000/api/dashboard')
           .then(({data})=>{
-            this.model.dashboard = data.data
+            this.model.dashboard.user.role = data.data.user.role
             this.model.dashboard.countTransaksi = data.data.countTransaksi[0].countTransaksi
             this.model.dashboard.countSiswa = data.data.countSiswa[0].countSiswa
             this.model.dashboard.countKelas = data.data.countKelas[0].countKelas

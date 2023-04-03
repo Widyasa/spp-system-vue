@@ -27,7 +27,7 @@
           </div>
           <div class="col-12">
             <button type="button" @click="saveKelas" class="btn btn-primary">Tambah Kelas</button>
-            <RouterLink :to="{name:'kelas'}" class="btn btn-secondary">Halaman Kelas</RouterLink>
+            <RouterLink :to="{name:'kelas'}" class="btn btn-secondary ml-3">Halaman Kelas</RouterLink>
           </div>
         </div>
       </form>
@@ -42,6 +42,7 @@ export default {
   name: "KelasCreate",
   data() {
     return {
+      token:localStorage.getItem('token'),
       errorlist:'',
       model: {
         kelas: {
@@ -49,6 +50,14 @@ export default {
             kompetensi_keahlian:''
         }
       }
+    }
+  },
+  created() {
+    axios.defaults.headers.common['Authorization'] = `Bearer ${this.token}`
+  },
+  mounted() {
+    if(!this.token) {
+      return this.$router.push({ name: 'login' })
     }
   },
   methods: {

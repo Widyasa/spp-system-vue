@@ -53,17 +53,26 @@ import axios from "axios";
 export default {
 name: "KelasIndex",
   data () {
+
   return{
+    token:localStorage.getItem('token'),
     kelas:[],
   }
   },
+  created() {
+    axios.defaults.headers.common['Authorization'] = `Bearer ${this.token}`
+    this.getKelas()
+  },
   mounted() {
+    if(!this.token) {
+      return this.$router.push({ name: 'login' })
+    }
     this.getKelas()
   },
   methods: {
     getKelas() {
       axios.get('http://127.0.0.1:8000/api/kelas').then(({data}) => {
-        this.kelas = data.data;
+        this.kelas = data.data.kelases;
         this.kelas.sort((a,b)=>a.kompetensi_keahlian.localeCompare(b.kompetensi_keahlian))
       });
     },
