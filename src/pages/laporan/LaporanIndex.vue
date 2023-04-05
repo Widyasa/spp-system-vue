@@ -1,7 +1,7 @@
 <template>
   <div class="d-sm-flex align-items-center justify-content-between mb-4">
     <h1 class="h3 mb-0 text-gray-800">Halaman Laporan</h1>
-    <a href="/api/generate" class="btn btn-primary">Cetak Laporan</a>
+    <RouterLink :to="{name:'generateLaporan'}"  class="btn btn-primary">Cetak Laporan</RouterLink>
   </div>
 
   <div class="card shadow mb-4">
@@ -23,15 +23,18 @@
             <th>Nominal</th>
           </tr>
           </thead>
-          <tbody>
-          <td>1.</td>
-          <td>Aditya Prayatna</td>
-          <td>123456789 | 12345</td>
-          <td>2022-02-23 08:43:54</td>
-          <td>Februari</td>
-          <td>2022</td>
-          <td>2021/2022</td>
-          <td>250.000</td>
+          <tbody v-if="this.laporan.length > 0">
+          <tr v-for="(laporan,index) in this.laporan" :key="index">
+            <td>{{index+1}}</td>
+            <td>{{laporan.nama}}</td>
+            <td>{{laporan.nisn}} & {{laporan.nis}}</td>
+            <td>{{laporan.tanggal_bayar}}</td>
+            <td>{{laporan.bulan_dibayar}}</td>
+            <td>{{laporan.tahun_dibayar}}</td>
+            <td>{{laporan.tahun_ajaran}}</td>
+            <td>{{laporan.nominal}}</td>
+
+          </tr>
           </tbody>
         </table>
       </div>
@@ -40,8 +43,27 @@
 </template>
 
 <script>
+import axios from "axios";
+
 export default {
-  name: "LaporanIndex"
+  name: "LaporanIndex",
+  data(){
+    return{
+      laporan:[]
+    }
+  },
+  mounted() {
+    this.getLaporan()
+  },
+  methods:{
+    getLaporan() {
+      axios.get('http://127.0.0.1:8000/api/generate')
+          .then(({data})=>{
+            this.laporan = data.data
+            this.laporan.sort((a,b)=>b.tanggal_bayar.localeCompare(a.tanggal_bayar))
+          })
+    }
+  }
 }
 </script>
 

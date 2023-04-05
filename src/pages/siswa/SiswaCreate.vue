@@ -97,13 +97,14 @@ export default {
       let myThis = this;
       axios.get('http://127.0.0.1:8000/api/siswa/tambah')
           .then(({data})=>{
-            this.lastId = data.data[0]
-            this.pembayaranId = data.data[1]
-            this.kelasId = data.data[2]
+            this.lastId = data.data.dataPengguna
+            this.pembayaranId = data.data.dataPembayaran
+            this.kelasId = data.data.dataKelas
             this.model.siswa.pembayaran_id= this.pembayaranId
             this.model.siswa.pengguna_id = this.lastId+1
             // console.log(this.lastId)
             // console.log(this.pembayaranId)
+            console.log(this.kelasId)
           })
           .catch((error) => {
             console.log(error);

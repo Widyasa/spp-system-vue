@@ -17,6 +17,8 @@ import loginPage from "@/pages/LoginPage.vue";
 import laporanGenerate from "@/pages/laporan/LaporanGenerate.vue";
 import petugasIndex from "@/pages/petugas/PetugasIndex.vue";
 import pembayaranEdit from "@/pages/pembayaran/PembayaranEdit.vue";
+import SppCreate from "@/pages/spp/SppCreate.vue";
+import LaporanGenerate from "@/pages/laporan/LaporanGenerate.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -41,7 +43,9 @@ const router = createRouter({
         {path: '/pembayaran/create', name:'createPembayaran', component: pembayaranCreate},
         {path: '/pembayaran/edit/:id', name:'EditPembayaran', component: pembayaranEdit},
         {path: '/spp', name:'spp', component: sppIndex},
+        {path: '/spp/create/:id', name:'createSpp', component: SppCreate},
         {path: '/laporan', name:'laporan', component: laporanIndex},
+        // {path: '/laporan/generate', name:'laporanGenerate', component: laporanGenerate},
       ]
     },
     {
@@ -52,7 +56,7 @@ const router = createRouter({
     {
       path: '/laporan/generatelaporan',
       name: 'generateLaporan',
-      component: laporanGenerate,
+      component: LaporanGenerate,
     }
 
   ]

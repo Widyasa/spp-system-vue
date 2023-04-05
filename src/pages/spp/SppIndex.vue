@@ -21,15 +21,14 @@
           </tr>
           </thead>
           <tbody>
-          <tr>
-            <td>1.</td>
-            <td>123456789 | 12345</td>
-            <td>Aditya Prayatna</td>
-            <td>2021/2022</td>
-            <td>250.000</td>
+          <tr v-for="(transaksi,index) in this.model.transaksi" :key="index">
+            <td>{{index+1}}</td>
+            <td>{{transaksi.nisn}} | {{transaksi.nis}}</td>
+            <td>{{transaksi.nama}}</td>
+            <td>{{transaksi.tahun_ajaran}}</td>
+            <td>{{transaksi.nominal}}</td>
             <td>
-              <button type="button" class="btn btn-primary btn-sm" data-toggle="modal"
-                      data-target="#tambahTransaksiModal">Bayar SPP</button>
+              <RouterLink :to="{path:'/spp/create/'+transaksi.siswa_id}" class="btn btn-primary btn-sm">Bayar SPP</RouterLink>
             </td>
           </tr>
           </tbody>
@@ -38,36 +37,43 @@
     </div>
   </div>
 
-  <div class="modal fade" id="tambahTransaksiModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-       aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Tambah Transaksi Siswa</h5>
-          <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">×</span>
-          </button>
-        </div>
-        <form action="">
-          <div class="modal-body">
-            <label for="bulan">Bulan Dibayar:</label>
-            <select class="form-control" id="bulan">
-              <option selected>Pilih bulan</option>
-            </select>
-          </div>
-          <div class="modal-footer">
-            <button class="btn btn-secondary" type="button" data-dismiss="modal">Batal Tambah</button>
-            <button type="submit" class="btn btn-primary">Tambah Transaksi</button>
-          </div>
-        </form>
-      </div>
-    </div>
-  </div>
 </template>
 
 <script>
+import axios from "axios";
+
 export default {
-  name: "SppIndex"
+  name: "SppIndex",
+  data() {
+    return {
+      siswa_id:'',
+      model:{
+        transaksi:[],
+        user:{
+          nama:'',
+          role:''
+        },
+        dataSiswa:[],
+        dataPetugas:{
+          petugas_id:''
+        },
+        dataBulan:[]
+      },
+      show:false,
+    }
+  },
+  mounted() {
+    this.getDataSiswa()
+  },
+  methods: {
+    getDataSiswa() {
+      axios.get('http://127.0.0.1:8000/api/transaksi')
+          .then(({data})=>{
+            const transaksi = data.data.transaksis
+            this.model.transaksi = transaksi
+          })
+    },
+  }
 }
 </script>
 
