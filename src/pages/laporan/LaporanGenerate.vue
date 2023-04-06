@@ -38,7 +38,6 @@
 </template>
 
 <script>
-window.print()
 import axios from "axios";
 
 export default {
