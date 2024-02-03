@@ -55,7 +55,8 @@ export default {
       axios.get('http://127.0.0.1:8000/api/generate')
           .then(({data})=>{
             this.laporan = data.data
-            this.laporan.sort((a,b)=>a.tanggal_bayar.localeCompare(b.tanggal_bayar))
+            this.laporan.sort((a,b)=>b.tanggal_bayar.localeCompare(a.tanggal_bayar))
+            window.print()
           })
     }
   }

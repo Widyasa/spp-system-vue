@@ -2,7 +2,8 @@
 
   <div class="d-sm-flex align-items-center justify-content-between mb-4">
     <h1 class="h3 mb-0 text-gray-800">Halaman Laporan</h1>
-    <button @click="generateLaporan(laporan)" class="btn btn-primary">Cetak Laporan</button>
+<!--    <button @click="generateLaporan(laporan)" class="btn btn-primary">Cetak Laporan</button>-->
+    <RouterLink :to="{name:'generateLaporan'}" class="btn btn-primary">Cetak Laporan</RouterLink>
   </div>
 
   <div class="card shadow mb-4" id="laporan">

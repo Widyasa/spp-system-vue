@@ -22,10 +22,10 @@
         </a>
         <!-- Dropdown - User Information -->
         <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
-          <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
+          <button type="button" @click="logout  " class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
             <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
             Logout
-          </a>
+          </button>
         </div>
       </li>
     </ul>
@@ -35,6 +35,7 @@
 
 <script>
 import axios from "axios";
+import jwtDecode from "jwt-decode";
 
 export default {
   name: "Topbar",
@@ -59,6 +60,12 @@ export default {
     if(!this.token) {
       return this.$router.push({ name: 'login' })
     }
+    const decodedToken = jwtDecode(token)
+    const currentTime = Date.now() / 1000
+    if (decodedToken.exp < currentTime){
+      localStorage.removeItem('token')
+      this.$router.push({ name: 'login' })
+    }
   },
   methods: {
     getDataDashboard() {
@@ -72,6 +79,10 @@ export default {
             // this.model.dashboard.countKelas = data.data.countKelas[0].countKelas
             // this.model.dashboard.countPetugas = data.data.countPetugas[0].countPetugas
           })
+    },
+    logout() {
+      localStorage.removeItem("token")
+      return this.$router.push({ name: 'login' })
     }
   }
 }
